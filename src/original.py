@@ -146,7 +146,7 @@ def validate(model, device, val_loader, criterion):
   average_loss = total_loss / len(val_loader)
   return average_loss
 
-def main():
+def train():
   # 训练模型
   train_losses = []
   val_losses = []
@@ -164,6 +164,56 @@ def main():
       best_val_loss = val_loss
       torch.save(model.state_dict(), 'BiTCN_best_model.pth')
       logger.info(f"Saved model with validation loss: {best_val_loss:.4f}")
+  
+def run():
+  model = BiTCN(input_channels,output_size,channel_sizes,kernel_size,seq_len=seq_length,dropout=dropout)
+  model.load_state_dict(torch.load("BiTCN_best_model.pth", map_location=torch.device('cpu')))
+  device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+  model.to(device)
+  # dataset, labels = preprocess_and_label_data(data_dir,data_file,label_file,seq_length)
+  X_train = torch.tensor(dataset, dtype=torch.float32)
+  y_train = torch.tensor(labels, dtype=torch.float32)
+  batch_size = 512
+  train_data = TensorDataset(X_train, y_train)
+  train_loader = DataLoader(train_data, batch_size=batch_size, shuffle=False)
+  predictions = []
+  
+  def get_txt(model, device, data_loader):
+    model.eval()
+    output=[]
+    with torch.no_grad():
+      import time
+      i = 0
+      for X_batch, y_batch in tqdm(data_loader, desc="Validation", leave=False):
+        start_time = time.time()  # 记录开始时间
+        out = model(X_batch.to(device))
+        end_time = time.time()  # 记录结束时间
+        inference_time = end_time - start_time  # 计算推理时间
+        print(f"Inference Time: {inference_time} seconds")
+        output.append(out.detach().cpu())
+        outputs = torch.cat(output, dim=0)
+        outputs_np = outputs.numpy()
+        print(len(outputs))
+        # i = i + 1
+        # if i == 10:
+        #   break
+    return outputs_np.flatten()
+  predictions = get_txt(model,device,train_loader)
+
+  half_window = (seq_length - 1) // 2
+  with open(r'./dataset/data64QAM.txt', 'r') as file:
+    original_data = np.array([float(line.strip()) for line in file.readlines()])
+  prefix = original_data[:half_window]
+  suffix = original_data[-half_window:]
+  final_predictions = np.concatenate([prefix, predictions, suffix])
+  final_predictions = final_predictions.reshape(-1,1)
+  # 保存补齐后的数据
+  final_predictions_file = 'new_BiTCN_final_predictions_471.txt'
+  np.savetxt(final_predictions_file, final_predictions, fmt='%f')
+  print(f"Final predictions with padding saved to {final_predictions_file}")
+
+def main():
+  run()
 
 if __name__ == "__main__":
   main()

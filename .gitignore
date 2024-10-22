@@ -1,2 +1,4 @@
 __pycache__
-/env/*
+# ignore the environment folder and everything inside it
+env/
+env/*

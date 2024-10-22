@@ -13,7 +13,7 @@ def plot_sequential_data(time_axis, red_data, blue_data_list):
     plt.figure(figsize=(10, 5))
     
     # Plot the red data
-    plt.plot(time_axis, red_data, color='red', label='Red Data', linewidth=2)
+    plt.scatter(time_axis, red_data, color='red', label='Red Data', linewidth=2)
     
     # Plot each blue data set
     for i, blue_data in enumerate(blue_data_list):
@@ -40,12 +40,12 @@ if __name__ == "__main__":
     data_array = parse_str(read_file("./dataset/data64QAM.txt"))
     data_len = len(data_array)
     
-    another_data_array = parse_str(read_file("./dataset/OSC_sync_471.txt"))
+    another_data_array = parse_str(read_file("./new_BiTCN_final_predictions_471.txt"))
     another_data_len = len(another_data_array)
     # print(data_len, len(another_data_array))
     
     time_axis = np.arange(0, min(data_len, another_data_len), 1)
-    data_array = data_array[:another_data_len]
+    data_array = data_array[:min(data_len, another_data_len)]
     # another_data_array = another_data_array[:10]
     print(len(data_array), len(another_data_array), len(time_axis))
     # # Create red data
