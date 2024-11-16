@@ -72,6 +72,7 @@ def split_sequence(dataset,labels,win_len):
 # Training parameters
 batch_size = 512
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+print(device)
 
 dropout = 0.00
 
@@ -85,8 +86,6 @@ kernel_size = 16
 input_channels = 1
 channel_sizes = [32]*4
 hidden_size = 128
-MLP_fir = hidden_size * 2 * seq_length# 128 * 2
-MLP_layer = decreasing_list_by_division(MLP_fir)
 
 # Import model
 model = BiTCN(input_channels,output_size,channel_sizes,kernel_size,seq_len=seq_length,dropout=dropout)
@@ -146,7 +145,7 @@ def validate(model, device, val_loader, criterion):
   average_loss = total_loss / len(val_loader)
   return average_loss
 
-def train():
+def run_trainner():
   # 训练模型
   train_losses = []
   val_losses = []
@@ -213,7 +212,11 @@ def run():
   print(f"Final predictions with padding saved to {final_predictions_file}")
 
 def main():
-  run()
+  model = BiTCN(input_channels,output_size,channel_sizes,kernel_size,seq_len=seq_length,dropout=dropout)
+  # print(model)
+
+  run_trainner()
+  # run()
 
 if __name__ == "__main__":
   main()

@@ -1,6 +1,6 @@
 import torch
 from torch import nn
-from src.nn.TCN1 import TemporalConvNet
+from nn.TCN1 import TemporalConvNet
 import matplotlib.pyplot as plt
 
 class BiTCN(nn.Module):
