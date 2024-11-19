@@ -5,7 +5,7 @@ We will build upon this foundation and try to make it better.
 """
 
 import torch.nn as nn
-from torch.nn.utils import weight_norm
+from torch.nn.utils.parametrizations import weight_norm
 
 class Chomp1D(nn.Module):
   """
@@ -19,7 +19,6 @@ class Chomp1D(nn.Module):
     """
     Purpose: trims the tensor along the last dimension.
     """
-    # .contiguous()确保了操作后的张量在内存中是连续存储的，这通常是后续操作（如view或reshape）的要求。
     return x[:, :, :-self.chomp_size].contiguous()
 
 class TemporalBlock(nn.Module):

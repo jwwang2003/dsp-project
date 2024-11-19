@@ -1,6 +1,43 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+def graph_fft_overlap(freqs_1, fft_signal_1, freqs_2, fft_signal_2, title: str = "", save_fig: bool = False, show_fig: bool = True):
+    """
+    Displays/saves the graph for overlapping FFT transforms in the frequency domain.
+    Highlights the differences between two FFT signals.
+    """
+    # Convert amplitude to dB scale
+    db_1 = 20 * np.log10(np.abs(fft_signal_1) + 1e-12)  # Avoid log(0)
+    db_2 = 20 * np.log10(np.abs(fft_signal_2) + 1e-12)  # Avoid log(0)
+
+    # Create the plot
+    plt.figure(figsize=(10, 6))
+    # Limit x-axis and y-axis to positive values only
+    plt.xlim(left=0)  # Set x-axis to start from 0 (positive frequencies only)
+    plt.ylim(bottom=0)  # Set y-axis to start from 0 (positive amplitude only)
+
+    # Plot both FFT signals
+    plt.plot(freqs_1, db_1, label="Signal 1 (dB)", color="blue")
+    plt.plot(freqs_2, db_2, label="Signal 2 (dB)", color="red")
+
+    # Highlight the region of difference
+    # plt.fill_between(freqs_1, db_1, db_2, where=(db_1 > db_2), interpolate=True, color='gray', alpha=0.3, label='Difference Region (Signal 1 > Signal 2)')
+    # plt.fill_between(freqs_1, db_1, db_2, where=(db_2 > db_1), interpolate=True, color='yellow', alpha=0.3, label='Difference Region (Signal 2 > Signal 1)')
+
+    # Add labels, legend, and title
+    plt.title(f'Overlap of Two FFT Signals and Region of Difference\n{title}')
+    plt.xlabel('Frequency (Hz)')
+    plt.ylabel('Amplitude (dB)')
+    plt.legend(loc='best')
+    plt.grid(True)
+
+    # Show and/or save the figure
+    if show_fig:
+        plt.show()
+    if save_fig:
+        plt.savefig(f"{title.replace(' ', '_')}_FFT_Comparison.png", bbox_inches="tight")
+
+
 def graph_fft(x_values, y_values, title: str="", save_fig: bool=False, show_fig: bool=True):
   """
   Displays/saves the graph for FFT transform in the frequency domain.

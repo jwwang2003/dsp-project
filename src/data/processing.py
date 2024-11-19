@@ -4,5 +4,5 @@ data files.
 """
 
 def parse_str(string: str) -> list[float]:
-  data: list[float] = [ [float(n)] for n in string.splitlines() ]
+  data: list[float] = [ [float(x) for x in n.strip().split()] for n in string.splitlines() ]
   return data
