@@ -1,3 +1,6 @@
+__author__ = "JUN WEI WANG"
+__email__ = "wjw_03@outlook.com"
+
 import torch
 from typing import Tuple
 from os import path
@@ -5,16 +8,16 @@ from torch.utils.data import Dataset
 import numpy as np
 
 # Local
-from data.processing import parse_str
-from data.file_handler import read_file
+from src.data.processing import parse_str
+from src.data.file_handler import read_file
 
 class CustomDataset(Dataset):
     def __init__(
             self,
-            folder_path: str,
-            data_file: str,
-            label_file: str,
-            win_len: int=1
+            folder_path:str=None,
+            data_file:  str=None,
+            label_file: str=None,
+            win_len:    int=1
           ):
         """
         Args:
@@ -23,6 +26,13 @@ class CustomDataset(Dataset):
             label_file (str): File name of the label file.
             win_len (int): Window length for sequence splitting.
         """
+
+        if folder_path == "" or folder_path == None:
+            self.dataset = None
+            self.labels = None
+            self.size = 0
+            return
+
         self.dataset, self.labels, self.size = self.preprocess_and_label_data(
             folder_path, data_file, label_file, win_len
         )
@@ -75,7 +85,7 @@ class CustomDataset(Dataset):
         return np.array(new_dataset), np.array(new_labels)
 
     def preprocess_and_label_data(
-        self, folder_path: str, data_file: str, label_file: str, win_len: int
+        self, folder_path: str, data_file: list[str], label_file: str, win_len: int
     ) -> Tuple[np.ndarray, np.ndarray, int]:
         """
         Preprocesses the data and labels by reading from files and applying sequence splitting.
@@ -94,12 +104,16 @@ class CustomDataset(Dataset):
         Raises:
             ValueError: If the dataset or labels cannot be loaded from the files.
         """
+
+        dataset: np.ndarray = []
+        labels:np.ndarray = []
+
         data_path = path.join(folder_path, data_file)
         label_path = path.join(folder_path, label_file)
-
+        
         dataset = parse_str(read_file(data_path))
         labels = parse_str(read_file(label_path))
-
+        
         # Ensure that the lengths of the dataset and their respective labels have the same length
         assert len(dataset) == len(labels)
 

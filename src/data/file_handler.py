@@ -1,3 +1,6 @@
+__author__ = "JUN WEI WANG"
+__email__ = "wjw_03@outlook.com"
+
 import threading
 from os import walk
 from re import Pattern

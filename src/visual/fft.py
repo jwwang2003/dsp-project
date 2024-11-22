@@ -1,7 +1,11 @@
+#%%
 import numpy as np
 import matplotlib.pyplot as plt
 
-def graph_fft_overlap(freqs_1, fft_signal_1, freqs_2, fft_signal_2, title: str = "", save_fig: bool = False, show_fig: bool = True):
+def graph_fft_overlap(
+      freqs_1, fft_signal_1, freqs_2, fft_signal_2, 
+      title: str = "", signal_1_name: str="Signal 1", signal_2_name: str="Signal 2", save_fig: bool = False, show_fig: bool = True
+    ):
     """
     Displays/saves the graph for overlapping FFT transforms in the frequency domain.
     Highlights the differences between two FFT signals.
@@ -12,20 +16,21 @@ def graph_fft_overlap(freqs_1, fft_signal_1, freqs_2, fft_signal_2, title: str =
 
     # Create the plot
     plt.figure(figsize=(10, 6))
+
+    # Plot both FFT signals
+    plt.plot(freqs_1, db_1, label=f"{signal_1_name} (dB)", color="gray", alpha=0.75)
+    plt.plot(freqs_2, db_2, label=f"{signal_2_name} (dB)", color="blue")
+
     # Limit x-axis and y-axis to positive values only
     plt.xlim(left=0)  # Set x-axis to start from 0 (positive frequencies only)
     plt.ylim(bottom=0)  # Set y-axis to start from 0 (positive amplitude only)
-
-    # Plot both FFT signals
-    plt.plot(freqs_1, db_1, label="Signal 1 (dB)", color="blue")
-    plt.plot(freqs_2, db_2, label="Signal 2 (dB)", color="red")
 
     # Highlight the region of difference
     # plt.fill_between(freqs_1, db_1, db_2, where=(db_1 > db_2), interpolate=True, color='gray', alpha=0.3, label='Difference Region (Signal 1 > Signal 2)')
     # plt.fill_between(freqs_1, db_1, db_2, where=(db_2 > db_1), interpolate=True, color='yellow', alpha=0.3, label='Difference Region (Signal 2 > Signal 1)')
 
     # Add labels, legend, and title
-    plt.title(f'Overlap of Two FFT Signals and Region of Difference\n{title}')
+    plt.title(f'{title}\n')
     plt.xlabel('Frequency (Hz)')
     plt.ylabel('Amplitude (dB)')
     plt.legend(loc='best')
@@ -38,7 +43,7 @@ def graph_fft_overlap(freqs_1, fft_signal_1, freqs_2, fft_signal_2, title: str =
         plt.savefig(f"{title.replace(' ', '_')}_FFT_Comparison.png", bbox_inches="tight")
 
 
-def graph_fft(x_values, y_values, title: str="", save_fig: bool=False, show_fig: bool=True):
+def graph_log(x_values, y_values, title: str="", save_fig: bool=False, show_fig: bool=True):
   """
   Displays/saves the graph for FFT transform in the frequency domain.
   By default, only display fig, does not save.
@@ -46,11 +51,9 @@ def graph_fft(x_values, y_values, title: str="", save_fig: bool=False, show_fig:
   """
   
   db = 20 * np.log10(np.abs(y_values) + 1e-12)  # Add a small value to avoid log(0)
-
-  # Plot the frequency domain graph (amplitude spectrum in dB)
   plt.figure(figsize=(10, 6))
+  # Plot the frequency domain graph (amplitude spectrum in dB)
   plt.plot(x_values, db)
-  
   # Limit x-axis and y-axis to positive values only
   plt.xlim(left=0)  # Set x-axis to start from 0 (positive frequencies only)
   plt.ylim(bottom=0)  # Set y-axis to start from 0 (positive amplitude only)
@@ -116,10 +119,11 @@ def main():
   
   fft_signal_1, freqs_1 = fft(array_data_1)
   fft_signal_2, freqs_2 = fft(array_data_2)
-  graph_fft(freqs_1, fft_signal_1, show_fig=False)
-  graph_fft(freqs_2, fft_signal_2, show_fig=False)
+  graph_log(freqs_1, fft_signal_1, show_fig=False)
+  graph_log(freqs_2, fft_signal_2, show_fig=False)
   plt.show()
 
 
 if __name__ == "__main__":
   main()
+#%%

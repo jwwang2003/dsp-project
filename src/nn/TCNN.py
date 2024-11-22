@@ -1,6 +1,9 @@
+__author__ = "JUN WEI WANG"
+__email__ = "wjw_03@outlook.com"
+
 import torch
 from torch import nn
-from nn.TCN import TemporalConvNet
+from src.nn.TCN import TemporalConvNet
 import matplotlib.pyplot as plt
 
 class BiTCN(nn.Module):

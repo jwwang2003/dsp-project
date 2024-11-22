@@ -5,6 +5,11 @@ __email__ = "brian.shevitski@gmail.com"
 #please note that the mapping between symbols and constellation points is not Gray coded.
 #Symbols and constellation points map to one another arbitrarily.
 
+"""
+This file is just an implementation for reference, this is not our code.
+Credits due to the author.
+"""
+
 import numpy as np
 
 def GetModulation(modulation,num_symbols,rng=False):
