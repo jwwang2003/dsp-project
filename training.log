@@ -1,1 +1,23 @@
-2024-11-16 15:44:40,865 - INFO - Starting epoch 1/10
+2024-11-23 02:02:19,578 - INFO - Starting epoch 1/10
+2024-11-23 02:02:50,019 - INFO - Epoch [1/10], Train Loss: 1.0052, Validation Loss: 0.9978
+2024-11-23 02:02:50,023 - INFO - Saved model with validation loss: 0.9978
+2024-11-23 02:02:50,023 - INFO - Starting epoch 2/10
+2024-11-23 02:03:20,185 - INFO - Epoch [2/10], Train Loss: 1.0020, Validation Loss: 0.9983
+2024-11-23 02:03:20,185 - INFO - Starting epoch 3/10
+2024-11-23 02:03:50,322 - INFO - Epoch [3/10], Train Loss: 1.0016, Validation Loss: 0.9978
+2024-11-23 02:03:50,329 - INFO - Saved model with validation loss: 0.9978
+2024-11-23 02:03:50,330 - INFO - Starting epoch 4/10
+2024-11-23 02:04:20,599 - INFO - Epoch [4/10], Train Loss: 1.0016, Validation Loss: 0.9978
+2024-11-23 02:04:20,599 - INFO - Starting epoch 5/10
+2024-11-23 02:04:50,841 - INFO - Epoch [5/10], Train Loss: 1.0016, Validation Loss: 0.9978
+2024-11-23 02:04:50,841 - INFO - Starting epoch 6/10
+2024-11-23 02:05:21,101 - INFO - Epoch [6/10], Train Loss: 1.0014, Validation Loss: 0.9978
+2024-11-23 02:05:21,101 - INFO - Starting epoch 7/10
+2024-11-23 02:05:51,448 - INFO - Epoch [7/10], Train Loss: 1.0016, Validation Loss: 0.9978
+2024-11-23 02:05:51,448 - INFO - Starting epoch 8/10
+2024-11-23 02:06:21,718 - INFO - Epoch [8/10], Train Loss: 1.0014, Validation Loss: 0.9978
+2024-11-23 02:06:21,725 - INFO - Saved model with validation loss: 0.9978
+2024-11-23 02:06:21,725 - INFO - Starting epoch 9/10
+2024-11-23 02:06:51,988 - INFO - Epoch [9/10], Train Loss: 1.0014, Validation Loss: 0.9978
+2024-11-23 02:06:51,988 - INFO - Starting epoch 10/10
+2024-11-23 02:07:22,265 - INFO - Epoch [10/10], Train Loss: 1.0015, Validation Loss: 0.9978
