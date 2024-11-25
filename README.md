@@ -1,4 +1,6 @@
-# Digital Signal Processing Project
+# Digital Signal Processing Midterm project
+
+A BiTCN machine learning project that does post-equalization on 64QAM-CAP signals.
 
 ## Python!
 
